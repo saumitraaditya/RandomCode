@@ -242,13 +242,13 @@ class FS:
 class Memory(LoggingMixIn, Operations):
     'Example memory filesystem. Supports only one level of files.'
 
-    def __init__(self,ht):
+    def __init__(self,url):
         global count # count is a global variable, can be used inside any function.
         count +=1 # increment count for very method call, to track count of calls made.
         print ("CallCount {} " " Time {}".format(count,datetime.datetime.now().time())) # print the parameters passed to the method as input.(used for debugging)
         print('In function __init__()') #print name of the method called
 
-        self.FS = FS(ht)
+        self.FS = FS(url)
        
         
        
