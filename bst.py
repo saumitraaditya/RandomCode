@@ -64,6 +64,28 @@ class tree:
         else:
             return None
             
+    def delete(self,val):
+        self.root = self.deleteNode(self.root,val)
+        
+    def deleteNode(self,self.curr,val):
+        if (self.curr == None):
+            print "Node not found"
+        else:
+            if (self.curr == val):
+                if (self.curr.lc == None):
+                    return self.curr.rc
+                elif (self.curr.rc == None):
+                    return self.curr.lc
+                else:
+                    rightmost_val = self.rightmost(self.curr.lc)
+                    self.curr.v = rightmost_val
+                    self.curr.lc = self.deleteNode(self.curr.lc,rightmost_val)
+            elif (val < self.curr.v):
+                self.curr.lc = self.deleteNode(self.curr.lc,val)
+            elif (val > self.curr.v):
+                self.curr.rc = self.deleteNode(self.curr.rc,val)
+        return self.curr
+            
             
 '''public void delete(T toDelete)
    {
