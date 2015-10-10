@@ -67,24 +67,31 @@ class tree:
     def delete(self,val):
         self.root = self.deleteNode(self.root,val)
         
-    def deleteNode(self,self.curr,val):
-        if (self.curr == None):
+    def deleteNode(self,curr,val):
+        if (curr == None):
             print "Node not found"
         else:
-            if (self.curr == val):
-                if (self.curr.lc == None):
-                    return self.curr.rc
-                elif (self.curr.rc == None):
-                    return self.curr.lc
+            if (curr.v == val):
+                if (curr.lc == None):
+                    return curr.rc
+                elif (curr.rc == None):
+                    return curr.lc
                 else:
-                    rightmost_val = self.rightmost(self.curr.lc)
-                    self.curr.v = rightmost_val
-                    self.curr.lc = self.deleteNode(self.curr.lc,rightmost_val)
-            elif (val < self.curr.v):
-                self.curr.lc = self.deleteNode(self.curr.lc,val)
-            elif (val > self.curr.v):
-                self.curr.rc = self.deleteNode(self.curr.rc,val)
-        return self.curr
+                    # get rightmost value in left subtree
+                    rightmost_val = self.rightmost(curr.lc)
+                    curr.v = rightmost_val
+                    curr.lc = self.deleteNode(curr.lc,rightmost_val)
+            elif (val < curr.v):
+                curr.lc = self.deleteNode(curr.lc,val)
+            elif (val > curr.v):
+                curr.rc = self.deleteNode(curr.rc,val)
+        return curr
+        
+    def rightmost(self,node):
+        if (node.rc == None):
+            return node.v
+        else:
+            return self.rightmost(node.lc)
             
             
 '''public void delete(T toDelete)
@@ -139,8 +146,12 @@ if __name__=="__main__":
     
     t.display()
     
-    print (len(t.lookup(67)))
+    '''print (len(t.lookup(67)))
     parent, curr = t.lookup(67)
     
     print parent.v
-    print curr.v
+    print curr.v'''
+    
+    t.delete(20)
+    
+    t.display()
