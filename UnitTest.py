@@ -60,8 +60,8 @@ class FileSystemTest(unittest.TestCase):
         os.chdir("dir1/dir2")
         writeIntoAFile("f21.txt","f21")
         writeIntoAFile("f22.txt","f22")
-        contents1 = os.listdir(".")
-        self.assertEqual(contents1,['dir3', 'f21.txt', 'f22.txt'],"Nested File creation failed")
+        contents1 = sorted(os.listdir("."))
+        self.assertEqual(contents1,sorted(['dir3', 'f21.txt', 'f22.txt']),"Nested File creation failed")
         
     def test_03_ReadFiles(self):
         os.chdir(basepath)
@@ -73,23 +73,23 @@ class FileSystemTest(unittest.TestCase):
         os.chdir(basepath)
         os.chdir("fusemount/dir1/dir2/")
         os.remove("f22.txt")
-        contents = os.listdir(".")
-        self.assertEqual(contents,['dir3', 'f21.txt'],"File deletion failed")
+        contents = sorted(os.listdir("."))
+        self.assertEqual(contents,sorted(['dir3', 'f21.txt']),"File deletion failed")
         
     def test_05_removeDir(self):
         os.chdir(basepath)
         os.chdir("fusemount/dir1/dir2/")
         os.rmdir("dir3")
-        contents = os.listdir(".")
-        self.assertEqual(contents,['f21.txt'],"Directory deletion failed")
+        contents = sorted(os.listdir("."))
+        self.assertEqual(contents,sorted(['f21.txt']),"Directory deletion failed")
         
     def test_06_renameFile(self):
         os.chdir(basepath)
         os.chdir("fusemount/dir1/dir2/")
         os.rename("f21.txt","../../f11.txt")
         os.chdir("../..")
-        contents = os.listdir(".")
-        self.assertEqual(contents,['dir1', 'f11.txt'],"File renaming failed")
+        contents = sorted(os.listdir("."))
+        self.assertEqual(contents,sorted(['dir1', 'f11.txt']),"File renaming failed")
         
         
         
