@@ -38,6 +38,8 @@ def readFile(filename):
     f.close()
     return ret_string
 
+basepath = '/home/sam/fusepy'
+
 class FileSystemTest(unittest.TestCase):
            
     def test_01_NestedDirectories(self):
@@ -49,7 +51,8 @@ class FileSystemTest(unittest.TestCase):
         os.chdir("dir2")
         os.mkdir("dir3")
         os.chdir("dir3")
-        self.assertEqual(os.getcwd(),"/dir1/dir2/dir3","Nested directory creation failed")
+        path = os.path.join(basepath,'fusemount','dir1/dir2/dir3')
+        self.assertEqual(os.getcwd(),path,"Nested directory creation failed")
         
     def test_02_NestedFileCreation(self):
         os.chdir(basepath)
@@ -58,7 +61,7 @@ class FileSystemTest(unittest.TestCase):
         writeIntoAFile("f21.txt","f21")
         writeIntoAFile("f22.txt","f22")
         contents1 = os.listdir(".")
-        self.assertEqual(contents1,[],"Nested File creation failed")
+        self.assertEqual(contents1,['dir3', 'f21.txt', 'f22.txt'],"Nested File creation failed")
         
     def test_03_ReadFiles(self):
         os.chdir(basepath)
@@ -71,14 +74,14 @@ class FileSystemTest(unittest.TestCase):
         os.chdir("fusemount/dir1/dir2/")
         os.remove("f22.txt")
         contents = os.listdir(".")
-        self.assertEqual(contents,[],"File deletion failed")
+        self.assertEqual(contents,['dir3', 'f21.txt'],"File deletion failed")
         
     def test_05_removeDir(self):
         os.chdir(basepath)
         os.chdir("fusemount/dir1/dir2/")
         os.rmdir("dir3")
         contents = os.listdir(".")
-        self.assertEqual(contents,[],"Directory deletion failed")
+        self.assertEqual(contents,['f21.txt'],"Directory deletion failed")
         
     def test_06_renameFile(self):
         os.chdir(basepath)
@@ -86,7 +89,7 @@ class FileSystemTest(unittest.TestCase):
         os.rename("f21.txt","../../f11.txt")
         os.chdir("../..")
         contents = os.listdir(".")
-        self.assertEqual(contents,[],"File renaming failed")
+        self.assertEqual(contents,['dir1', 'f11.txt'],"File renaming failed")
         
         
         
